@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reskilling · Ruta de Desarrollo · Dominio Digital</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+:root {
+  --bg: #f5f5f7;
+  --surface: #ffffff;
+  --surface2: #f0f0f5;
+  --border: #e0e0e8;
+  --accent: #7b5cf0;
+  --accent-light: #ede9ff;
+  --green: #1a9e6b;
+  --green-light: #e6f7f1;
+  --yellow: #b57c00;
+  --yellow-light: #fff8e6;
+  --red: #d63f5e;
+  --red-light: #fdeef2;
+  --blue: #2563eb;
+  --blue-light: #eff6ff;
+  --text: #1a1a2e;
+  --muted: #6b6b80;
+  --muted2: #9999aa;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  padding-bottom: 90px;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  padding: 0 40px;
+  display: flex;
+  align-items: stretch;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px 14px 0;
+  margin-right: 28px;
+  border-right: 1px solid var(--border);
+}
+
+.logo {
+  width: 34px; height: 34px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 14px; color: white;
+  flex-shrink: 0;
+}
+
+.logo-wrap h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: var(--text); white-space: nowrap;
+}
+
+.tabs {
+  display: flex; align-items: stretch; gap: 0;
+}
+
+.tab {
+  padding: 0 18px;
+  display: flex; align-items: center;
+  font-size: 12px; font-family: 'DM Mono', monospace;
+  color: var(--muted); cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all .15s; white-space: nowrap;
+  letter-spacing: .02em;
+}
+
+.tab:hover { color: var(--text); background: var(--surface2); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 500; }
+
+.header-right {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 0;
+}
+
+/* ── PANELS ── */
+.panel { display: none; max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+.panel.active { display: block; }
+
+/* ── SECTION TITLES ── */
+.sec-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px; font-weight: 800;
+  color: var(--text); margin-bottom: 4px;
+}
+.sec-sub {
+  font-size: 13px; color: var(--muted);
+  margin-bottom: 24px; line-height: 1.6;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 24px;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: var(--text); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+/* ── FORM FIELDS ── */
+.field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+.field:last-child { margin-bottom: 0; }
+
+.field-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px; color: var(--muted);
+  letter-spacing: .12em; text-transform: uppercase;
+}
+
+input.fi, select.fi, textarea.fi {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  width: 100%; outline: none;
+  transition: border-color .2s;
+}
+
+input.fi:focus, select.fi:focus, textarea.fi:focus {
+  border-color: var(--accent);
+  background: #fff;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 20px;
+}
+
+.form-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0 20px;
+}
+
+.span2 { grid-column: 1 / -1; }
+
+/* ── COMMITMENT BANNER ── */
+.cbanner {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+
+.cb {
+  padding: 16px 20px;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.cb:last-child { border-right: none; }
+
+.cb-eye {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--muted2);
+}
+
+.cb-t {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px; font-weight: 700; color: var(--text);
+}
+
+.cb-d {
+  font-size: 11.5px; color: var(--muted);
+  line-height: 1.5; font-style: italic;
+}
+
+/* ── DECISION BOX ── */
+.decision-box {
+  background: var(--accent-light);
+  border: 1.5px solid #c4adff;
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 12.5px;
+  color: var(--accent);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+.decision-box strong { font-weight: 600; }
+
+/* ── PROGRESS ── */
+.progress-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 16px;
+}
+
+.progress-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--muted);
+  letter-spacing: .1em; text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.progress-bar-bg {
+  flex: 1;
+  background: var(--surface2);
+  border-radius: 99px; height: 6px; overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--green));
+  border-radius: 99px;
+  transition: width .5s cubic-bezier(.4,0,.2,1);
+}
+
+.progress-pct {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px; font-weight: 800;
+  color: var(--green); white-space: nowrap;
+}
+
+/* ── PHASES ── */
+.phase {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  transition: border-color .2s;
+}
+
+.phase.ap { border-color: #c4adff; }
+.phase.dp { border-color: #86efcc; }
+
+.phase-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px;
+  cursor: pointer; user-select: none;
+  background: var(--surface);
+}
+
+.phase-header:hover { background: var(--surface2); }
+
+.pnum {
+  width: 28px; height: 28px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; font-weight: 500; flex-shrink: 0;
+}
+
+.stp { background: var(--surface2); color: var(--muted); border: 1.5px solid var(--border); }
+.sta { background: var(--accent); color: white; }
+.std { background: var(--green-light); color: var(--green); border: 1.5px solid #86efcc; }
+
+.pinf { flex: 1; }
+
+.pt {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px; font-weight: 700; color: var(--text);
+  margin-bottom: 1px;
+}
+
+.ps { font-size: 11.5px; color: var(--muted); }
+
+.ptm {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  color: var(--muted); background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 3px 10px; border-radius: 6px;
+  white-space: nowrap; flex-shrink: 0;
+}
+
+.pcnt {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  padding: 3px 9px; border-radius: 20px; flex-shrink: 0;
+}
+.pcz { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+.pcm { background: var(--accent-light); color: var(--accent); border: 1px solid #c4adff; }
+.pcf { background: var(--green-light); color: var(--green); border: 1px solid #86efcc; }
+
+.pchev { font-size: 11px; color: var(--muted2); transition: transform .2s; flex-shrink: 0; }
+.phase.open .pchev { transform: rotate(180deg); }
+
+.pbody {
+  display: none;
+  padding: 0 20px 18px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.phase.open .pbody { display: block; }
+
+/* ── TASK GROUPS ── */
+.tgroup { margin-top: 14px; }
+
+.tgt {
+  font-size: 11px; font-weight: 500; color: var(--muted);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+
+.ti {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--surface2);
+}
+.ti:last-child { border-bottom: none; }
+
+.tck {
+  width: 18px; height: 18px; border-radius: 5px;
+  border: 1.5px solid var(--border); background: white;
+  cursor: pointer; flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s; font-size: 10px; color: transparent;
+}
+.tck.checked { background: var(--green); border-color: var(--green); color: white; }
+
+.tcon { flex: 1; }
+.ttx { font-size: 13px; color: var(--text); line-height: 1.5; }
+.ttx.xt { color: var(--muted2); text-decoration: line-through; }
+
+.tmeta { display: flex; gap: 5px; margin-top: 5px; flex-wrap: wrap; }
+
+.tag {
+  display: inline-block; padding: 2px 7px; border-radius: 4px;
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
+}
+.to { background: var(--accent-light); color: var(--accent); }
+.tm { background: var(--red-light); color: var(--red); }
+.th { background: var(--yellow-light); color: var(--yellow); }
+.tp { background: var(--green-light); color: var(--green); }
+.tf { background: var(--blue-light); color: var(--blue); }
+
+.tnote {
+  font-size: 11px; color: var(--muted);
+  margin-top: 4px; line-height: 1.45; font-style: italic;
+}
+
+.ins {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-family: 'DM Mono', monospace;
+  color: var(--accent);
+  background: var(--accent-light);
+  border: 1px solid #c4adff;
+  border-radius: 20px; padding: 2px 9px; margin-top: 5px;
+}
+
+/* ── CIERRE ── */
+.cierre-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+
+.result-card {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.result-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: var(--muted2);
+  letter-spacing: .12em; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.sm-selector {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px;
+}
+
+.sm-btn {
+  padding: 6px 14px; border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: white; color: var(--muted);
+  font-size: 12px; font-family: 'DM Mono', monospace;
+  cursor: pointer; transition: all .15s;
+}
+
+.sm-btn.selected {
+  background: var(--green-light);
+  border-color: var(--green);
+  color: var(--green); font-weight: 500;
+}
+
+.status-selector { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+
+.status-btn {
+  padding: 6px 14px; border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: white; color: var(--muted);
+  font-size: 11px; font-family: 'DM Mono', monospace;
+  cursor: pointer; transition: all .15s;
+}
+.status-btn.sel-verde { background: var(--green-light); border-color: var(--green); color: var(--green); }
+.status-btn.sel-amarillo { background: var(--yellow-light); border-color: var(--yellow); color: var(--yellow); }
+.status-btn.sel-rojo { background: var(--red-light); border-color: var(--red); color: var(--red); }
+
+/* ── FOOTER ── */
+.footer-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--surface);
+  border-top: 1.5px solid var(--border);
+  padding: 12px 40px;
+  display: flex; align-items: center; gap: 10px;
+  z-index: 100;
+  box-shadow: 0 -2px 8px rgba(0,0,0,.06);
+}
+
+.btn {
+  padding: 8px 18px; border-radius: 8px;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px; font-weight: 600;
+  border: none; cursor: pointer; transition: opacity .15s;
+}
+.btn:hover { opacity: .82; }
+.btn-p { background: var(--accent); color: white; }
+.btn-g { background: var(--surface2); color: var(--text); border: 1.5px solid var(--border); }
+
+.fst {
+  margin-left: auto;
+  font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-wrap">
+    <div class="logo">DD</div>
+    <h1>Reskilling · Ruta de Desarrollo</h1>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('decision',this)">🌱 Reskilling</div>
+    <div class="tab" onclick="showTab('proceso',this)">🗂 Acompañamiento</div>
+    <div class="tab" onclick="showTab('cierre',this)">✅ Cierre</div>
+  </div>
+  <div class="header-right">
+    <span id="hdr-persona" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">—</span>
+    <span id="hdr-fecha" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">—</span>
+  </div>
+</header>
+
+
+<!-- ════════════════════ TAB 1: RESKILLING ════════════════════ -->
+<div class="panel active" id="tab-decision">
+  <div class="sec-title">Ruta de desarrollo</div>
+  <div class="sec-sub">Buscamos estructurar y robustecer los procesos de desarrollo para dar visibilidad de la ruta de aprendizaje esperada a cada colaborador. El Owner acompaña y se compromete con este camino.</div>
+
+  <div class="decision-box">
+    <strong>Punto de partida:</strong> el punto de partida es una conversación de desarrollo entre el Owner y el colaborador. Este registro da visibilidad a la ruta — qué se va a aprender, cómo se va a acompañar y qué se espera lograr.
+  </div>
+
+  <div class="cbanner">
+    <div class="cb">
+      <div class="cb-eye">El colaborador se compromete a</div>
+      <div class="cb-t">🎯 Ser protagonista de su desarrollo</div>
+    </div>
+    <div class="cb">
+      <div class="cb-eye">El Owner se compromete a</div>
+      <div class="cb-t">🧭 Acompañar la ruta</div>
+    </div>
+    <div class="cb">
+      <div class="cb-eye">El Mentor se compromete a</div>
+      <div class="cb-t">🔧 Acompañar el desarrollo de la maestría técnica</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">👤 El colaborador y su ruta</div>
+    <div class="form-grid">
+      <div class="field">
+        <div class="field-label">Nombre de la persona</div>
+        <input class="fi" id="inp-persona" placeholder="Nombre completo" oninput="sh()">
+      </div>
+      <div class="field">
+        <div class="field-label">Fecha de inicio</div>
+        <input class="fi" type="date" id="inp-fecha" oninput="sh()">
+      </div>
+      <div class="field">
+        <div class="field-label">Rol actual</div>
+        <input class="fi" id="inp-rol-a" placeholder="Ej: Developer">
+      </div>
+      <div class="field">
+        <div class="field-label">Rol nuevo</div>
+        <input class="fi" id="inp-rol-n" placeholder="Ej: Tech Lead">
+      </div>
+      <div class="field">
+        <div class="field-label">Habilidad actual</div>
+        <input class="fi" id="inp-hab-a" placeholder="Ej: Testing">
+      </div>
+      <div class="field">
+        <div class="field-label">Habilidad nueva</div>
+        <input class="fi" id="inp-hab-n" placeholder="Ej: DevOps">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧭 Owner y Mentor</div>
+    <div class="form-grid">
+      <div class="field">
+        <div class="field-label">Owner responsable</div>
+        <input class="fi" id="inp-owner" placeholder="Nombre del Owner">
+      </div>
+      <div class="field">
+        <div class="field-label">Mentor asignado</div>
+        <input class="fi" id="inp-mentor" placeholder="Nombre del Mentor">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 La ruta de desarrollo</div>
+    <div class="field span2">
+      <div class="field-label">¿Qué motivó este proceso de desarrollo?</div>
+      <textarea class="fi" id="inp-porq" rows="3" placeholder="Ej: El colaborador manifestó interés en DevOps y tiene potencial técnico para desarrollarlo. El equipo también necesita más profundidad en esa habilidad."></textarea>
+    </div>
+    <div class="field span2" style="margin-top:14px">
+      <div class="field-label">¿Qué esperamos que logre en los primeros 30 días?</div>
+      <textarea class="fi" id="inp-d30" rows="2" placeholder="Ej: Completar la autoevaluación en la Skill Matrix de DevOps y participar en 2 encuentros de la Comunidad de Práctica."></textarea>
+    </div>
+    <div class="field span2" style="margin-top:14px">
+      <div class="field-label">¿Cómo se ve la evolución a los 90 días?</div>
+      <textarea class="fi" id="inp-evolucion" rows="2" placeholder="Ej: Alcanzar Nivel 2 en la Skill Matrix de DevOps y poder operar de forma semi-autónoma en el equipo."></textarea>
+    </div>
+    <div class="form-grid" style="margin-top:14px">
+      <div class="field">
+        <div class="field-label">Agilidad de aprendizaje</div>
+        <select class="fi" id="inp-agil">
+          <option value="">— evaluar al inicio —</option>
+          <option value="Alta">Alta — puede arrancar ya</option>
+          <option value="Media">Media — necesita más acompañamiento</option>
+          <option value="Baja">Baja — revisar el momento</option>
+        </select>
+      </div>
+      <div class="field">
+        <div class="field-label">Nivel Skill Matrix de partida</div>
+        <select class="fi" id="inp-sm-ini">
+          <option value="">— nivel inicial —</option>
+          <option value="1">1 — Sin conocimiento aún</option>
+          <option value="2">2 — Bajo nivel</option>
+          <option value="3">3 — Buen nivel</option>
+          <option value="4">4 — Alto</option>
+          <option value="5">5 — Experto/Maestría</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════ TAB 2: ACOMPAÑAMIENTO ════════════════════ -->
+<div class="panel" id="tab-proceso">
+  <div class="sec-title">Acompañamiento · 90 días</div>
+  <div class="sec-sub">La ruta de aprendizaje tiene hitos concretos. El Owner acompaña activamente en cada etapa — los checkpoints son acuerdos/compromisos.</div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">AVANCE DE LA RUTA</div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="pbar" style="width:0%"></div>
+    </div>
+    <div class="progress-pct" id="ppct">0%</div>
+  </div>
+
+  <div id="phases-container"></div>
+</div>
+
+
+<!-- ════════════════════ TAB 3: CIERRE ════════════════════ -->
+<div class="panel" id="tab-cierre">
+  <div class="sec-title">Cierre del desarrollo</div>
+  <div class="sec-sub">¿Qué aprendió el colaborador? ¿Qué cambió? ¿Cuál es el próximo paso? El cierre da visibilidad de lo logrado y actualiza el mapa de talento del Dominio.</div>
+
+  <div class="card">
+    <div class="card-title">📊 ¿Qué nivel de maestría alcanzó?</div>
+    <div class="field">
+      <div class="field-label">Nivel Skill Matrix al cierre</div>
+      <div class="sm-selector">
+        <button class="sm-btn" onclick="selSM(0,this)">Nivel 0</button>
+        <button class="sm-btn" onclick="selSM(1,this)">Nivel 1</button>
+        <button class="sm-btn" onclick="selSM(2,this)">Nivel 2</button>
+        <button class="sm-btn" onclick="selSM(3,this)">Nivel 3</button>
+        <button class="sm-btn" onclick="selSM(4,this)">Nivel 4</button>
+        <button class="sm-btn" onclick="selSM(5,this)">Nivel 5</button>
+      </div>
+    </div>
+    <div class="field" style="margin-top:14px">
+      <div class="field-label">¿Qué puede hacer ahora que antes no podía? (concreto y observable)</div>
+      <textarea class="fi" id="c-evidencia" rows="3" placeholder="Ej: Puede configurar pipelines básicos de CI/CD de forma autónoma y resolvió 3 incidentes de infraestructura sin asistencia del Mentor."></textarea>
+    </div>
+    <div class="field" style="margin-top:14px">
+      <div class="field-label">¿Qué le queda por desarrollar?</div>
+      <textarea class="fi" id="c-brechas" rows="2" placeholder="Ej: Todavía necesita acompañamiento para configurar entornos de producción complejos."></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧭 Reflexión del Owner</div>
+    <div class="field">
+      <div class="field-label">¿Qué aprendió el Owner acompañando esta ruta?</div>
+      <textarea class="fi" id="c-owner-aprendizaje" rows="2" placeholder="Reflexión del Owner sobre el proceso de acompañamiento..."></textarea>
+    </div>
+    <div class="field" style="margin-top:14px">
+      <div class="field-label">Avatar 2.0 realizado</div>
+      <div class="status-selector">
+        <button class="status-btn" onclick="selStatus('avatar','sel-verde',this)">✓ Sí</button>
+        <button class="status-btn" onclick="selStatus('avatar','sel-amarillo',this)">⏳ Pendiente</button>
+        <button class="status-btn" onclick="selStatus('avatar','sel-rojo',this)">✗ No</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔗 Decisión de continuidad</div>
+    <div class="field">
+      <div class="field-label">¿El onboarding está cerrado?</div>
+      <div class="status-selector">
+        <button class="status-btn" onclick="selStatus('cierre-estado','sel-verde',this)">✓ Cerrado — proceso completado</button>
+        <button class="status-btn" onclick="selStatus('cierre-estado','sel-amarillo',this)">⏳ Extensión necesaria</button>
+        <button class="status-btn" onclick="selStatus('cierre-estado','sel-rojo',this)">✗ No funcionó — revisar</button>
+      </div>
+    </div>
+    <div class="field" style="margin-top:14px">
+      <div class="field-label">Si necesita extensión o revisión — ¿cuál es el siguiente paso?</div>
+      <textarea class="fi" id="c-siguiente" rows="2" placeholder="Ej: Extender 30 días con foco en entornos de producción. Mentor asignado continúa."></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Actualizar el mapa de talento del Dominio</div>
+    <div class="cierre-grid">
+      <div class="result-card">
+        <div class="result-label">Mapeo de Talento actualizado</div>
+        <div class="status-selector" style="margin-top:8px">
+          <button class="status-btn" onclick="selStatus('mapeo','sel-verde',this)">✓ Sí</button>
+          <button class="status-btn" onclick="selStatus('mapeo','sel-amarillo',this)">⏳ Pendiente</button>
+        </div>
+      </div>
+      <div class="result-card">
+        <div class="result-label">Skill Matrix actualizada</div>
+        <div class="status-selector" style="margin-top:8px">
+          <button class="status-btn" onclick="selStatus('sm-update','sel-verde',this)">✓ Sí</button>
+          <button class="status-btn" onclick="selStatus('sm-update','sel-amarillo',this)">⏳ Pendiente</button>
+        </div>
+      </div>
+      <div class="result-card">
+        <div class="result-label">¿Este desarrollo cubre una habilidad crítica sin backup?</div>
+        <div class="status-selector" style="margin-top:8px">
+          <button class="status-btn" onclick="selStatus('backup','sel-verde',this)">✓ Sí, cubierta</button>
+          <button class="status-btn" onclick="selStatus('backup','sel-rojo',this)">✗ No</button>
+        </div>
+      </div>
+      <div class="result-card">
+        <div class="result-label">¿El colaborador puede ser Mentor en esta habilidad?</div>
+        <div class="status-selector" style="margin-top:8px">
+          <button class="status-btn" onclick="selStatus('mentor-fut','sel-verde',this)">✓ Listo</button>
+          <button class="status-btn" onclick="selStatus('mentor-fut','sel-amarillo',this)">⏳ En desarrollo</button>
+          <button class="status-btn" onclick="selStatus('mentor-fut','sel-rojo',this)">✗ Todavía no</button>
+        </div>
+      </div>
+    </div>
+    <div class="field" style="margin-top:14px">
+      <div class="field-label">¿Qué aporte realizó el colaborador a la Comunidad de Práctica?</div>
+      <textarea class="fi" id="c-comunidad" rows="2" placeholder="El aprendizaje adquirido vuelve a la comunidad — ¿qué compartió como cierre de su ruta?"></textarea>
+    </div>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<div class="footer-bar">
+  <button class="btn btn-p" onclick="exp()">↓ Exportar resumen</button>
+  <button class="btn btn-g" onclick="resetAll()">Reiniciar</button>
+  <span id="save-indicator" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--green);opacity:0;transition:opacity .4s">✓ Guardado</span>
+  <span class="fst" id="fst">0 de 0 tareas completadas</span>
+</div>
+
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────
+const PH = [
+  {
+    id:"pre", title:"Antes del Primer Día", tm:"D-5 a D-1",
+    sub:"DC y Owner preparan el terreno — la persona todavía no llegó",
+    groups:[
+      { t:"🟡 DC · Activar el proceso", tasks:[
+        {x:"Registrar formalmente el movimiento en Curiocity", r:["hr"]},
+        {x:"Verificar que la Skill Matrix de la habilidad destino esté actualizada y disponible desde el día 1", r:["hr"]},
+        {x:"Confirmar que hay un Mentor activo y disponible en la comunidad de práctica destino. En caso de no haber Mentor, detectar a la persona con mayor habilidad para que acompañe al nuevo integrante.", r:["hr"]},
+        {x:"Coordinar transición entre Owner de origen y Owner de nuevo equipo", r:["hr"]}
+      ]},
+      { t:"🟣 Owner · Preparar la llegada", tasks:[
+        {x:"Informar al Mentor para que pueda acompañar el ingreso", r:["owner"]},
+        {x:"Preparar el contexto del equipo: backlog actual, OKRs del semestre, acuerdos de trabajo", r:["owner"]},
+        {x:"Documentar expectativas para los primeros 30, 60 y 90 días.", r:["owner"]},
+        {x:"Coordinar con el Facilitador el onboarding al modelo ágil si la persona viene de un equipo con dinámica diferente", r:["owner","faci"]}
+      ]}
+    ]
+  },
+  {
+    id:"s1", title:"Primera Semana", tm:"D1 – D7",
+    sub:"El Mentor recibe técnicamente · El Owner da el para qué · La persona asume protagonismo",
+    groups:[
+      { t:"🟣 Owner · Dar propósito y contexto", tasks:[
+        {x:"1:1 Owner → persona el día 1: Comunicar las expectativas y confirmar el Compromiso de Desarrollo documentándolo en Curiocity", r:["owner","persona"]},
+        {x:"Acordar cómo se va a medir el avance — con hechos observables concretos a los 30, 60 y 90 días", r:["owner","mentor"]}
+      ]},
+      { t:"🔴 Mentor · Recibir técnicamente", tasks:[
+        {x:"Primer 1:1 Mentor → persona: recorrido por la Skill Matrix y niveles de maestría de la práctica real", r:["mentor"]},
+        {x:"Realizar juntos la autoevaluación inicial en la Skill Matrix", r:["mentor","persona"]},
+        {x:"Incorporar a la persona en la agenda de la Comunidad de Práctica", r:["mentor"]},
+        {x:"Compartir estándares, procesos y buenas prácticas", r:["mentor"]}
+      ]},
+      { t:"🟢 Persona · Asumir el protagonismo", tasks:[
+        {x:"Completar la autoevaluación en la Skill Matrix con honestidad", r:["persona"]},
+        {x:"Participar activamente en la Comunidad de Práctica", r:["persona"]},
+        {x:"Hacer preguntas al Mentor, al equipo y al Owner", r:["persona"]}
+      ]}
+    ]
+  },
+  {
+    id:"d30", title:"Checkpoint 30 días", tm:"D30",
+    sub:"Primera revisión real — ¿el acompañamiento está funcionando?",
+    groups:[
+      { t:"🟣 Owner · No soltar en la primera curva", tasks:[
+        {x:"1:1 Owner → persona: ¿qué está funcionando? ¿qué necesita para avanzar mejor?", r:["owner","persona"]},
+        {x:"Reunión Owner + Mentor: ¿cómo va la adaptación técnica? ¿hay brechas no previstas?", r:["owner","mentor"]},
+        {x:"Validar que la persona está participando en la Comunidad de Práctica", r:["owner","mentor"]},
+        {x:"Registrar el avance y progreso de la persona en el nuevo rol", r:["owner","hr"]}
+      ]},
+      { t:"🔴 Mentor · Evidencia de avance", tasks:[
+        {x:"Revisar el avance en la Skill Matrix vs. nivel inicial — con evidencia concreta de qué cambió", r:["mentor"]},
+        {x:"Confirmar si el foco de desarrollo sigue siendo el correcto o necesita ajuste", r:["mentor","owner"]}
+      ]},
+      { t:"🟢 Persona · Mostrar avance y pedir lo que necesita", tasks:[
+        {x:"Preparar el 1:1 con el Owner: ¿qué aprendí? ¿dónde me trabé? ¿qué necesito?", r:["persona"]}
+      ]}
+    ]
+  },
+  {
+    id:"d60", title:"Checkpoint 60 días", tm:"D60",
+    sub:"Revisión de progreso",
+    groups:[
+      { t:"🟣 Owner · Decidir con evidencia, no con intuición", tasks:[
+        {x:"Conversación entre Owner + Mentor + persona: ajuste del Compromiso de Desarrollo", r:["owner","mentor","persona"]},
+      ]},
+      { t:"🔴 Mentor · Nueva medición con datos", tasks:[
+        {x:"Compartir con Owner hechos observables para evaluar evolución", r:["mentor","owner"]},
+        {x:"Redefinir si es necesario", r:["mentor"]}
+      ]},
+      { t:"🟢 Persona · Reflexión honesta y feedback bidireccional", tasks:[
+        {x:"Conversación entre Owner, Mentor y Persona para dar feedback sobre el acompañamiento recibido", r:["persona"]}
+      ]}
+    ]
+  },
+  {
+    id:"d90", title:"Cierre 90 días", tm:"D90",
+    sub:"Evaluación completa · Decisión de continuidad",
+    groups:[
+      { t:"🟣 Owner · Cerrar el ciclo con intención", tasks:[
+        {x:"Revisar si se cumplieron las expectativas. 1:1 Owner → persona: balance del trimestre — qué se logró y qué aprendió cada uno. Qué oportunidades hay.", r:["owner","persona"]},
+        {x:"Completar la pestaña Cierre con evidencia", r:["owner","hr"]}
+      ]},
+      { t:"🔴 Mentor · Evaluación de maestría alcanzada", tasks:[
+        {x:"Evaluación completa en Skill Matrix: nivel alcanzado vs. nivel requerido para operar con autonomía", r:["mentor","persona"]},
+        {x:"Conversación entre Mentor y DC para evidenciar cambios concretos y medir evolución", r:["mentor","hr"]}
+      ]},
+      { t:"🟢 Persona · Integración y devolución a la comunidad", tasks:[
+        {x:"Autoevaluación final en la Skill Matrix — reflexión honesta sobre el camino recorrido", r:["persona"]}
+      ]}
+    ]
+  }
+];
+
+const RC = { owner:"to", mentor:"tm", hr:"th", persona:"tp", faci:"tf" };
+const RL = { owner:"Owner", mentor:"Mentor", hr:"DC", persona:"Persona", faci:"Facilitador" };
+let CK = {};
+let smSelected = null;
+let statusSelected = {};
+
+// ── BUILD PHASES ──────────────────────────────────────────────
+function init() {
+  const cont = document.getElementById("phases-container");
+  PH.forEach((ph, pi) => {
+    let tot = 0;
+    ph.groups.forEach(g => tot += g.tasks.length);
+    const el = document.createElement("div");
+    el.className = "phase" + (pi === 0 ? " open ap" : "");
+    el.id = "ph-" + ph.id;
+    const gb = ph.groups.map((g, gi) => `
+      <div class="tgroup">
+        <div class="tgt">${g.t}</div>
+        ${g.tasks.map((t, ti) => {
+          const k = `${ph.id}-${gi}-${ti}`; CK[k] = false;
+          return `<div class="ti">
+            <div class="tck" id="ck-${k}" onclick="tgl('${k}')"></div>
+            <div class="tcon">
+              <div class="ttx" id="tx-${k}">${t.x}</div>
+              <div class="tmeta">${t.r.map(r=>`<span class="tag ${RC[r]}">${RL[r]}</span>`).join("")}</div>
+              ${t.n?`<div class="tnote">${t.n}</div>`:""}
+              ${t.i?`<div class="ins">✦ ${t.i}</div>`:""}
+            </div>
+          </div>`;
+        }).join("")}
+      </div>`).join("");
+    el.innerHTML = `
+      <div class="phase-header" onclick="tph('${ph.id}')">
+        <div class="pnum ${pi===0?'sta':'stp'}" id="pn-${ph.id}">${pi+1}</div>
+        <div class="pinf">
+          <div class="pt">${ph.title}</div>
+          <div class="ps">${ph.sub}</div>
+        </div>
+        <span class="pcnt pcz" id="pc-${ph.id}">0/${tot}</span>
+        <span class="ptm">${ph.tm}</span>
+        <span class="pchev" id="cv-${ph.id}">${pi===0?"▲":"▼"}</span>
+      </div>
+      <div class="pbody">${gb}</div>`;
+    cont.appendChild(el);
+  });
+  updP();
+  document.getElementById("inp-fecha").value = new Date().toISOString().split("T")[0];
+  sh();
+}
+
+// ── TABS ──────────────────────────────────────────────────────
+function showTab(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── PHASE TOGGLE ──────────────────────────────────────────────
+function tph(id) {
+  const el = document.getElementById("ph-" + id);
+  const cv = document.getElementById("cv-" + id);
+  el.classList.toggle("open");
+  cv.textContent = el.classList.contains("open") ? "▲" : "▼";
+}
+
+// ── TASK TOGGLE ───────────────────────────────────────────────
+function tgl(k) {
+  CK[k] = !CK[k];
+  const c = document.getElementById("ck-" + k);
+  const t = document.getElementById("tx-" + k);
+  c.classList.toggle("checked", CK[k]);
+  c.textContent = CK[k] ? "✓" : "";
+  t.classList.toggle("xt", CK[k]);
+  updP();
+}
+
+// ── UPDATE PROGRESS ───────────────────────────────────────────
+function updP() {
+  let tot = 0, dn = 0;
+  PH.forEach((ph, pi) => {
+    let pd = 0, pt = 0;
+    ph.groups.forEach((g, gi) => g.tasks.forEach((_, ti) => {
+      const k = `${ph.id}-${gi}-${ti}`; pt++; tot++;
+      if (CK[k]) { pd++; dn++; }
+    }));
+    const el = document.getElementById("ph-" + ph.id);
+    const cnt = document.getElementById("pc-" + ph.id);
+    const num = document.getElementById("pn-" + ph.id);
+    cnt.textContent = `${pd}/${pt}`;
+    cnt.className = "pcnt " + (pd === 0 ? "pcz" : pd === pt ? "pcf" : "pcm");
+    const done = pd === pt && pt > 0;
+    el.classList.toggle("dp", done);
+    el.classList.toggle("ap", pd > 0 && !done);
+    num.className = "pnum " + (done ? "std" : pd > 0 ? "sta" : "stp");
+    num.textContent = done ? "✓" : (pi + 1);
+  });
+  const pct = tot > 0 ? Math.round(dn / tot * 100) : 0;
+  document.getElementById("ppct").textContent = pct + "%";
+  document.getElementById("pbar").style.width = pct + "%";
+  document.getElementById("fst").textContent = `${dn} de ${tot} tareas completadas`;
+}
+
+// ── HEADER SYNC ───────────────────────────────────────────────
+function sh() {
+  const p = document.getElementById("inp-persona").value;
+  const f = document.getElementById("inp-fecha").value;
+  document.getElementById("hdr-persona").textContent = p || "—";
+  if (f) {
+    const d = new Date(f + "T00:00:00");
+    document.getElementById("hdr-fecha").textContent =
+      "Inicio: " + d.toLocaleDateString("es-AR", { day: "2-digit", month: "short", year: "numeric" });
+  }
+}
+
+// ── CIERRE SELECTORS ──────────────────────────────────────────
+function selSM(n, btn) {
+  document.querySelectorAll('.sm-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  smSelected = n;
+}
+
+function selStatus(group, cls, btn) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.status-btn').forEach(b => {
+    b.classList.remove('sel-verde', 'sel-amarillo', 'sel-rojo');
+  });
+  btn.classList.add(cls);
+  statusSelected[group] = btn.textContent.trim();
+}
+
+// ── EXPORT ────────────────────────────────────────────────────
+function exp() {
+  const g = id => (document.getElementById(id) ? document.getElementById(id).value || "—" : "—");
+  const persona = g("inp-persona"), owner = g("inp-owner"), mentor = g("inp-mentor");
+  const rolA = g("inp-rol-a"), rolN = g("inp-rol-n");
+  const habA = g("inp-hab-a"), habN = g("inp-hab-n");
+  const fecha = g("inp-fecha"), agil = g("inp-agil"), smIni = g("inp-sm-ini");
+  const porq = g("inp-porq"), d30exp = g("inp-d30"), exito = g("inp-evolucion");
+  const tot = Object.keys(CK).length, dn = Object.values(CK).filter(Boolean).length;
+  const pct = tot > 0 ? Math.round(dn / tot * 100) : 0;
+
+  let L = [
+    "PLAN DE INCORPORACIÓN INTERNA · 90 DÍAS · DOMINIO DIGITAL",
+    `Generado: ${new Date().toLocaleDateString("es-AR")}`, "",
+    "── DECISIÓN ──────────────────────────────────────────",
+    `PERSONA:   ${persona}`,
+    `ROL:       ${rolA} → ${rolN}`,
+    `HABILIDAD: ${habA} → ${habN}`,
+    `OWNER:     ${owner}`, `MENTOR:    ${mentor}`,
+    `INICIO:    ${fecha}`, `AGILIDAD:  ${agil}`,
+    `NIVEL SM INICIAL: ${smIni}`, "",
+    `¿Por qué se decidió el movimiento?\n${porq}`, "",
+    `¿Qué se espera en 30 días?\n${d30exp}`, "",
+    `¿Cómo se ve la evolución a los 90 días?\n${exito}`, "",
+    "── PROCESO ───────────────────────────────────────────",
+    `PROGRESO: ${dn}/${tot} (${pct}%)`, ""
+  ];
+
+  PH.forEach((ph, pi) => {
+    let pd = 0, pt = 0;
+    ph.groups.forEach((g2, gi) => g2.tasks.forEach((_, ti) => {
+      const k = `${ph.id}-${gi}-${ti}`; pt++; if (CK[k]) pd++;
+    }));
+    L.push(`FASE ${pi+1}: ${ph.title} · ${ph.tm} · ${pd}/${pt}`);
+    ph.groups.forEach((g2, gi) => {
+      L.push(`  ${g2.t}`);
+      g2.tasks.forEach((t, ti) => {
+        const k = `${ph.id}-${gi}-${ti}`;
+        L.push(`    [${CK[k] ? "✓" : " "}] ${t.x}`);
+      });
+    });
+    L.push("");
+  });
+
+  L.push("── CIERRE ────────────────────────────────────────────");
+  L.push(`NIVEL SM ALCANZADO: ${smSelected !== null ? 'Nivel ' + smSelected : '—'}`);
+  L.push(`EVIDENCIA: ${g("c-evidencia")}`);
+  L.push(`BRECHAS: ${g("c-brechas")}`);
+  L.push(`APRENDIZAJE OWNER: ${g("c-owner-aprendizaje")}`);
+  L.push(`SIGUIENTE PASO: ${g("c-siguiente")}`);
+  L.push(`COMUNIDAD: ${g("c-comunidad")}`);
+  Object.entries(statusSelected).forEach(([k, v]) => L.push(`${k.toUpperCase()}: ${v}`));
+
+  const blob = new Blob([L.join("\n")], { type: "text/plain;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `incorporacion_${persona.replace(/\s+/g, "_")}_DD.txt`;
+  a.click();
+}
+
+// ── NOTION SYNC ───────────────────────────────────────────────
+const NOTION_TOKEN = "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";
+const NOTION_DB_ID = "2a56092b4b97427ca96943dbc196c2ef";
+const NOTION_API  = "https://api.notion.com/v1";
+
+let notionPageId = null; // ID de la página en Notion para este colaborador
+
+function getFieldVal(id) {
+  const el = document.getElementById(id);
+  return el ? el.value || "" : "";
+}
+
+function buildNotionPayload() {
+  const tot = Object.keys(CK).length;
+  const dn  = Object.values(CK).filter(Boolean).length;
+  const pct = tot > 0 ? Math.round(dn / tot * 100) : 0;
+  const persona = getFieldVal("inp-persona") || "Sin nombre";
+  const fecha   = getFieldVal("inp-fecha");
+
+  const props = {
+    "Colaborador":              { title: [{ text: { content: persona } }] },
+    "Rol actual":               { rich_text: [{ text: { content: getFieldVal("inp-rol-a") } }] },
+    "Rol nuevo":                { rich_text: [{ text: { content: getFieldVal("inp-rol-n") } }] },
+    "Habilidad actual":         { rich_text: [{ text: { content: getFieldVal("inp-hab-a") } }] },
+    "Habilidad nueva":          { rich_text: [{ text: { content: getFieldVal("inp-hab-n") } }] },
+    "Owner":                    { rich_text: [{ text: { content: getFieldVal("inp-owner") } }] },
+    "Mentor / Referente técnico": { rich_text: [{ text: { content: getFieldVal("inp-mentor") } }] },
+    "Motivación del proceso":   { rich_text: [{ text: { content: getFieldVal("inp-porq") } }] },
+    "Expectativa 30 días":      { rich_text: [{ text: { content: getFieldVal("inp-d30") } }] },
+    "Evolución esperada 90 días": { rich_text: [{ text: { content: getFieldVal("inp-evolucion") } }] },
+    "Progreso tareas (%)":      { number: pct },
+    "Tareas completadas":       { number: dn },
+    "Tareas totales":           { number: tot },
+    "Evidencia de aprendizaje": { rich_text: [{ text: { content: getFieldVal("c-evidencia") } }] },
+    "Brechas pendientes":       { rich_text: [{ text: { content: getFieldVal("c-brechas") } }] },
+    "Aprendizaje del Owner":    { rich_text: [{ text: { content: getFieldVal("c-owner-aprendizaje") } }] },
+    "Siguiente paso":           { rich_text: [{ text: { content: getFieldVal("c-siguiente") } }] },
+    "Aporte a la comunidad":    { rich_text: [{ text: { content: getFieldVal("c-comunidad") } }] },
+  };
+
+  // Fecha de inicio
+  if (fecha) props["Fecha de inicio"] = { date: { start: fecha } };
+
+  // Selects simples
+  const agil = getFieldVal("inp-agil");
+  if (agil) props["Agilidad de aprendizaje"] = { select: { name: agil } };
+
+  const smIni = getFieldVal("inp-sm-ini");
+  if (smIni) props["Nivel SM inicial"] = { number: parseFloat(smIni) };
+
+  if (smSelected !== null) props["Nivel SM al cierre"] = { number: smSelected };
+
+  // Status selectors
+  const estadoMap = {
+    "✓ Cerrado — proceso completado": "Cerrado",
+    "⏳ Extensión necesaria":         "Extensión necesaria",
+    "✗ No funcionó — revisar":        "No funcionó"
+  };
+  const estadoRaw = statusSelected["cierre-estado"];
+  if (estadoRaw) props["Estado del proceso"] = { select: { name: estadoMap[estadoRaw] || "En curso" } };
+  else props["Estado del proceso"] = { select: { name: "En curso" } };
+
+  const boolMap = { "✓ Sí": "Sí", "✓ Listo": "Listo", "⏳ Pendiente": "Pendiente", "⏳ En desarrollo": "En desarrollo", "✗ No": "No", "✗ Todavía no": "Todavía no", "✓ Sí, cubierta": "Sí" };
+  const avatarRaw = statusSelected["avatar"];
+  if (avatarRaw) props["Avatar 2.0"] = { select: { name: boolMap[avatarRaw] || avatarRaw } };
+  const mapeoRaw = statusSelected["mapeo"];
+  if (mapeoRaw) props["Mapeo de talento actualizado"] = { select: { name: boolMap[mapeoRaw] || mapeoRaw } };
+  const smUpdRaw = statusSelected["sm-update"];
+  if (smUpdRaw) props["Skill Matrix actualizada"] = { select: { name: boolMap[smUpdRaw] || smUpdRaw } };
+  const backupRaw = statusSelected["backup"];
+  if (backupRaw) props["Cubre habilidad crítica sin backup"] = { select: { name: boolMap[backupRaw] || backupRaw } };
+  const mentorFutRaw = statusSelected["mentor-fut"];
+  if (mentorFutRaw) props["Puede ser Mentor"] = { select: { name: boolMap[mentorFutRaw] || mentorFutRaw } };
+
+  return props;
+}
+
+async function syncNotion() {
+  const persona = getFieldVal("inp-persona");
+  if (!persona) return;
+
+  const properties = buildNotionPayload();
+
+  try {
+    await fetch("/.netlify/functions/notion-sync", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ persona, properties })
+    });
+  } catch(e) {
+    console.warn("Error al sincronizar con Notion:", e);
+  }
+}
+
+// ── PERSISTENCIA LOCAL ────────────────────────────────────────
+const STORAGE_KEY = "dd_reskilling_v2";
+
+// Guardar todo el estado
+function saveState() {
+  const fields = [
+    "inp-persona","inp-fecha","inp-rol-a","inp-rol-n",
+    "inp-hab-a","inp-hab-n","inp-owner","inp-mentor",
+    "inp-porq","inp-d30","inp-evolucion","inp-agil","inp-sm-ini",
+    "c-evidencia","c-brechas","c-owner-aprendizaje","c-siguiente","c-comunidad"
+  ];
+  const fieldValues = {};
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) fieldValues[id] = el.value;
+  });
+
+  const state = {
+    checks: CK,
+    fields: fieldValues,
+    smSelected,
+    statusSelected
+  };
+
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch(e) {
+    console.warn("No se pudo guardar el estado:", e);
+  }
+}
+
+// Restaurar todo el estado
+function restoreState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const state = JSON.parse(raw);
+
+    // Restaurar campos de texto
+    if (state.fields) {
+      Object.entries(state.fields).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+      });
+    }
+
+    // Restaurar checkboxes
+    if (state.checks) {
+      Object.entries(state.checks).forEach(([k, val]) => {
+        if (val) {
+          CK[k] = true;
+          const c = document.getElementById("ck-" + k);
+          const t = document.getElementById("tx-" + k);
+          if (c) { c.classList.add("checked"); c.textContent = "✓"; }
+          if (t) t.classList.add("xt");
+        }
+      });
+    }
+
+    // Restaurar SM selector
+    if (state.smSelected !== null && state.smSelected !== undefined) {
+      smSelected = state.smSelected;
+      document.querySelectorAll('.sm-btn').forEach(btn => {
+        if (btn.textContent.trim() === 'Nivel ' + smSelected) btn.classList.add('selected');
+      });
+    }
+
+    // Restaurar status selectors
+    if (state.statusSelected) {
+      statusSelected = state.statusSelected;
+      // Re-aplicar clases visuales
+      const groupMap = {
+        'avatar': 'sel-verde', 'cierre-estado': 'sel-verde',
+        'mapeo': 'sel-verde', 'sm-update': 'sel-verde',
+        'backup': 'sel-verde', 'mentor-fut': 'sel-verde'
+      };
+      document.querySelectorAll('.status-btn').forEach(btn => {
+        const group = btn.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+        const cls = btn.getAttribute('onclick')?.match(/'(sel-[^']+)'/g)?.[1]?.replace(/'/g,'');
+        if (group && cls && statusSelected[group] === btn.textContent.trim()) {
+          btn.classList.add(cls);
+        }
+      });
+    }
+
+    sh();
+    updP();
+  } catch(e) {
+    console.warn("No se pudo restaurar el estado:", e);
+  }
+}
+
+// Guardar automáticamente en cada cambio
+let notionSyncTimer = null;
+function autoSave() {
+  saveState();
+  showSaveIndicator();
+  // Sincronizar con Notion con debounce de 2s para no saturar la API
+  clearTimeout(notionSyncTimer);
+  notionSyncTimer = setTimeout(() => { syncNotion(); }, 2000);
+}
+
+// Indicador visual de guardado
+function showSaveIndicator() {
+  let ind = document.getElementById("save-indicator");
+  if (!ind) return;
+  ind.textContent = "✓ Guardado · sincronizando…";
+  ind.style.opacity = "1";
+  setTimeout(() => { ind.style.opacity = "0"; }, 3000);
+}
+
+// ── RESET ─────────────────────────────────────────────────────
+function resetAll() {
+  if (!confirm("¿Reiniciar todo el proceso? Se borrarán todos los datos guardados.")) return;
+  Object.keys(CK).forEach(k => {
+    CK[k] = false;
+    const c = document.getElementById("ck-" + k);
+    const t = document.getElementById("tx-" + k);
+    if (c) { c.classList.remove("checked"); c.textContent = ""; }
+    if (t) t.classList.remove("xt");
+  });
+  smSelected = null;
+  statusSelected = {};
+  document.querySelectorAll('.sm-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.status-btn').forEach(b => {
+    b.classList.remove('sel-verde','sel-amarillo','sel-rojo');
+  });
+  const fields = [
+    "inp-persona","inp-fecha","inp-rol-a","inp-rol-n",
+    "inp-hab-a","inp-hab-n","inp-owner","inp-mentor",
+    "inp-porq","inp-d30","inp-evolucion","inp-agil","inp-sm-ini",
+    "c-evidencia","c-brechas","c-owner-aprendizaje","c-siguiente","c-comunidad"
+  ];
+  fields.forEach(id => { const el = document.getElementById(id); if (el) el.value = ""; });
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  updP();
+  sh();
+}
+
+// Interceptar tgl para guardar después de cada check
+const _tgl = tgl;
+window.tgl = function(k) { _tgl(k); autoSave(); };
+
+// Interceptar selSM para guardar
+const _selSM = selSM;
+window.selSM = function(n, btn) { _selSM(n, btn); autoSave(); };
+
+// Interceptar selStatus para guardar
+const _selStatus = selStatus;
+window.selStatus = function(group, cls, btn) { _selStatus(group, cls, btn); autoSave(); };
+
+// Guardar al cambiar campos de texto
+document.addEventListener("input", function(e) {
+  if (e.target.classList.contains("fi")) autoSave();
+});
+
+init();
+restoreState();
+</script>
+</body>
+</html>
