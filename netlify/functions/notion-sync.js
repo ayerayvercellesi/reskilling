@@ -1,4 +1,4 @@
-const NOTION_TOKEN = "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";
+const NOTION_TOKEN = "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";
 const NOTION_DB_ID = "2a56092b4b97427ca96943dbc196c2ef";
 const NOTION_API   = "https://api.notion.com/v1";
 
@@ -69,3 +69,4 @@ exports.handler = async function(event) {
     return { statusCode: 500, headers: cors, body: JSON.stringify({ error: e.message }) };
   }
 };
+
