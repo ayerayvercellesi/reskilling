@@ -1078,25 +1078,53 @@ function buildNotionPayload() {
   return props;
 }
 
-async function syncNotion() {
+async function syncSheets() {
   const persona = getFieldVal("inp-persona");
   if (!persona) return;
 
-  const properties = buildNotionPayload();
+  const tot = Object.keys(CK).length;
+  const dn  = Object.values(CK).filter(Boolean).length;
+  const pct = tot > 0 ? Math.round(dn / tot * 100) : 0;
+
+  const data = {
+    colaborador: persona,
+    fecha: getFieldVal("inp-fecha"),
+    rolActual: getFieldVal("inp-rol-a"),
+    rolNuevo: getFieldVal("inp-rol-n"),
+    habActual: getFieldVal("inp-hab-a"),
+    habNuevo: getFieldVal("inp-hab-n"),
+    owner: getFieldVal("inp-owner"),
+    mentor: getFieldVal("inp-mentor"),
+    motivacion: getFieldVal("inp-porq"),
+    d30: getFieldVal("inp-d30"),
+    evolucion: getFieldVal("inp-evolucion"),
+    agilidad: getFieldVal("inp-agil"),
+    smIni: getFieldVal("inp-sm-ini"),
+    progreso: pct,
+    tareasCompletadas: dn,
+    tareasTotales: tot,
+    smCierre: smSelected !== null ? smSelected : "",
+    evidencia: getFieldVal("c-evidencia"),
+    brechas: getFieldVal("c-brechas"),
+    aprendizajeOwner: getFieldVal("c-owner-aprendizaje"),
+    siguientePaso: getFieldVal("c-siguiente"),
+    comunidad: getFieldVal("c-comunidad"),
+    estado: statusSelected["cierre-estado"] || "En curso"
+  };
 
   try {
-    await fetch("/.netlify/functions/notion-sync", {
+    await fetch("https://script.google.com/macros/s/AKfycbzDwYf37WeMM7roZy7IrrKR1vy-YtWVuWCE6TiSMXmcpforRGW5QmyITeH1GzM_mNrM/exec", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ persona, properties })
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify(data)
     });
   } catch(e) {
-    console.warn("Error al sincronizar con Notion:", e);
+    console.warn("Error al sincronizar con Sheets:", e);
   }
 }
 
 // ── PERSISTENCIA LOCAL ────────────────────────────────────────
-const STORAGE_KEY = "dd_reskilling_v2";
+const STORAGE_KEY = "dd_reskilling_v3";
 
 // Guardar todo el estado
 function saveState() {
@@ -1194,7 +1222,7 @@ function autoSave() {
   showSaveIndicator();
   // Sincronizar con Notion con debounce de 2s para no saturar la API
   clearTimeout(notionSyncTimer);
-  notionSyncTimer = setTimeout(() => { syncNotion(); }, 2000);
+  notionSyncTimer = setTimeout(() => { syncSheets(); }, 2000);
 }
 
 // Indicador visual de guardado
