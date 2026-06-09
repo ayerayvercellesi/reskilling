@@ -1104,6 +1104,21 @@ async function syncSheets() {
   const dn  = Object.values(CK).filter(Boolean).length;
   const pct = tot > 0 ? Math.round(dn / tot * 100) : 0;
 
+  // Armar resumen de checkpoints por fase
+  let checkpointResumen = "";
+  PH.forEach(ph => {
+    let tareasFase = [];
+    ph.groups.forEach((g, gi) => {
+      g.tasks.forEach((t, ti) => {
+        const k = ph.id + "-" + gi + "-" + ti;
+        if (CK[k]) tareasFase.push("✓ " + t.x);
+      });
+    });
+    if (tareasFase.length > 0) {
+      checkpointResumen += "[" + ph.title + "]\n" + tareasFase.join("\n") + "\n\n";
+    }
+  });
+
   const data = {
     colaborador: persona,
     completadoPor: getFieldVal("inp-completado-por"),
@@ -1129,7 +1144,8 @@ async function syncSheets() {
     aprendizajeOwner: getFieldVal("c-owner-aprendizaje"),
     siguientePaso: getFieldVal("c-siguiente"),
     comunidad: getFieldVal("c-comunidad"),
-    estado: statusSelected["cierre-estado"] || "En curso"
+    estado: statusSelected["cierre-estado"] || "En curso",
+    checkpoints: checkpointResumen.trim()
   };
 
   try {
