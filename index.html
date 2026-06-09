@@ -473,8 +473,7 @@ input.fi:focus, select.fi:focus, textarea.fi:focus {
     <div class="tab" onclick="showTab('cierre',this)">✅ Cierre</div>
   </div>
   <div class="header-right">
-    <span id="hdr-persona" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">—</span>
-    <span id="hdr-fecha" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">—</span>
+
   </div>
 </header>
 
@@ -500,6 +499,25 @@ input.fi:focus, select.fi:focus, textarea.fi:focus {
     <div class="cb">
       <div class="cb-eye">El Mentor se compromete a</div>
       <div class="cb-t">🔧 Acompañar el desarrollo de la maestría técnica</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✍️ ¿Quién completa este registro?</div>
+    <div class="form-grid">
+      <div class="field">
+        <div class="field-label">Tu nombre</div>
+        <input class="fi" id="inp-completado-por" placeholder="Tu nombre completo" oninput="autoSave()">
+      </div>
+      <div class="field">
+        <div class="field-label">Tu rol en la ruta de acompañamiento</div>
+        <select class="fi" id="inp-rol-completador" onchange="autoSave()">
+          <option value="">— seleccioná tu rol —</option>
+          <option value="Owner">Owner</option>
+          <option value="Mentor">Mentor</option>
+          <option value="DC">DC (Dominio Cultural)</option>
+        </select>
+      </div>
     </div>
   </div>
 
@@ -1088,6 +1106,8 @@ async function syncSheets() {
 
   const data = {
     colaborador: persona,
+    completadoPor: getFieldVal("inp-completado-por"),
+    rolCompletador: getFieldVal("inp-rol-completador"),
     fecha: getFieldVal("inp-fecha"),
     rolActual: getFieldVal("inp-rol-a"),
     rolNuevo: getFieldVal("inp-rol-n"),
@@ -1130,7 +1150,7 @@ const STORAGE_KEY = "dd_reskilling_v3";
 function saveState() {
   const fields = [
     "inp-persona","inp-fecha","inp-rol-a","inp-rol-n",
-    "inp-hab-a","inp-hab-n","inp-owner","inp-mentor",
+    "inp-completado-por","inp-rol-completador","inp-hab-a","inp-hab-n","inp-owner","inp-mentor",
     "inp-porq","inp-d30","inp-evolucion","inp-agil","inp-sm-ini",
     "c-evidencia","c-brechas","c-owner-aprendizaje","c-siguiente","c-comunidad"
   ];
@@ -1252,7 +1272,7 @@ function resetAll() {
   });
   const fields = [
     "inp-persona","inp-fecha","inp-rol-a","inp-rol-n",
-    "inp-hab-a","inp-hab-n","inp-owner","inp-mentor",
+    "inp-completado-por","inp-rol-completador","inp-hab-a","inp-hab-n","inp-owner","inp-mentor",
     "inp-porq","inp-d30","inp-evolucion","inp-agil","inp-sm-ini",
     "c-evidencia","c-brechas","c-owner-aprendizaje","c-siguiente","c-comunidad"
   ];
